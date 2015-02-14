@@ -1,13 +1,221 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\author{Имя Фамилия}
-\title{Отчет по лабораторной работе}
+\documentclass[a4paper, 12pt]{article}		% general format
+
+%%%% Charset
+\usepackage{cmap}							% make PDF files searchable and copyable
+\usepackage[utf8]{inputenc}					% accept different input encodings
+\usepackage[T2A]{fontenc}					% russian font
+\usepackage[russian]{babel}					% multilingual support (T2A)
+
+%%%% Graphics
+\usepackage[dvipsnames]{xcolor}			% driver-independent color extensions
+\usepackage{graphicx}						% enhanced support for graphics
+\usepackage{wrapfig}						% produces figures which text can flow around
+
+%%%% Math
+\usepackage{amsmath}						% American Mathematical Society (AMS) math facilities
+\usepackage{amsfonts}						% fonts from the AMS
+\usepackage{amssymb}						% additional math symbols
+
+%%%% Typograpy (don't forget about cm-super)
+\usepackage{microtype}						% subliminal refinements towards typographical perfection
+\linespread{1.3}							% line spacing
+\usepackage[left=2.5cm, right=1.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\setlength{\parindent}{0pt}					% we don't want any paragraph indentation
+
+%%%% Other
+\usepackage{url}							% verbatim with URL-sensitive line breaks
+
+
+%------------------------------------------------------------------------------
+\author{Семён Мартынов\\<semen.martynov@gmail.com>}
+\title{Отчет по лабораторной работе 1:\\\LaTeX{} Git GPG}
 \begin{document}
 \maketitle
+\tableofcontents{}
+
+%------------------------------------------------------------------------------
+\newpage
+\section{Cистема верстки \TeX{} и расширения \LaTeX{}}
+
+\subsection{Цель работы}
+
+Изучение принципов верстки \TeX{}, создание первого отчёта.
+
+\subsection{Ход работы}
+
+Файл .tex представляет из себя обычный текстовый файл содержащий макрокоманды текстовой разметки.
+
+\subsubsection{Компиляция в командной строке}
+
+\begin{itemize}
+	\item{ latex генерирует файл в формате DVI (\textbf{D}e\textbf{V}ice \textbf{I}ndependent — аппаратно независимый) не предназначенный для чтения человеком, но содержит двоичные данные, описывающие визуальное представление документа способом, не ориентированным на какой-либо формат изображения, монитор или принтер.  Файлы DVI обычно подаются на вход другой программы (называемой DVI-драйвером), которая преобразует их в графические данные.
+	\begin{verbatim}latex report.tex
+	\end{verbatim}}
+	
+	\item {xdvi одна из программ DVI-драйверов, позволяющих отображать данные в формате DVI в X Window системах
+	\begin{verbatim}xdvi report.dvi
+	\end{verbatim}
+	
+	Результат показан на рисунке 1.
+	
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.83]{res/xdvi}
+	\caption{Запуск xdvi}
+	\end{figure}
+	}
+	
+	\item {pdflatex позволяет сразу сгенерировать pdf файл. Главное различие между TeX и pdfLaTeX состоит в том, что TeX после трансляции выдаёт DVI-файлы, а pdfTeX -- PDF-файлы, минуя цепочку преобразований DVI -> PS -> PDF.
+	\begin{verbatim}pdflatex report.tex
+	\end{verbatim}}
+
+\end{itemize}
+
+\subsubsection{Оболочка TexMaker}
+
+Texmaker является мощным редактором текста и исходного кода, работающий с языком разметки LaTeX. Он позволяет форматировать текст и готовить многостраничные документы к печати. Редактор предоставляет возможность работы с библиографическими списками, оглавлением и другими атрибутами профессионального оформления. В Texmaker есть так же возможность конвертирования документов в различные форматы, функции сворачивания блоков кода и автозавершения кода, встроенный просмотрщик PDF документов и многое другое. Внешний вид редактора представлен на рисунке 2.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{res/TexMaker}
+\caption{Редактор TexMaker}
+\end{figure}
+
+Texmaker обладает двумя интересными возможностями: быстрый старт и быстрая сборка.
+
+Быстрый старт (рисунок 2) позволяет задать преамбулу (главные особенности - класс, размер бумаги, кодировку...) документа. Имеется возможность создать собственную модель преамбулы в редакторе.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{res/QuickStart}
+\caption{Редактор TexMaker}
+\end{figure}
+
+Самый простой способ скомпилировать документ это использовать команду "Быстрая сборка". Задать последовательность команд используемых быстрой сборкой можно в диалоге "Настроить Texmaker". Если в коде документа содержатся ошибки, Texmaker напишет об этом в окне сообщений.
+
+\subsubsection{Классы документов}
+
+Каждый созданный файл в \LaTeX{} начинается с команды \verb+\documentclass[...]{…}+, в фигурных скобках которой задаются параметры оформления стиля документа, а в квадратных — список классовых опций.
+
+Всего же в \LaTeX{} 5 основных классов документов: article (для статей), report (для верстки небольших книг, статей, разбитых на главы), book (для верстки книг), proc (возможно использовать для докладов) и letter (для оформления деловых писем). Помимо этих основных, есть ещё множество дополнительных классов, таких как beamer.
+
+\subsubsection{Подключаемые пакеты}
+
+В \LaTeX{} можно применять специфические, отличные от изначальных, настройки (поля, списки и таблицы, библиографические ссылки и прочее). Для этого используются пакеты расширений, подключаемые в "шапке" документа.
+
+Пример:
+\begin{verbatim}\usepackage[russian]{babel} % Пакет поддержки русского языка
+\end{verbatim}
+
+\subsubsection{Вёрстка формул}
+
+Вёрстка формул не представляет никакой сложности.
+
+Система дифференциальных уравнений Рёсслера
+
+\begin{center}
+$\left \{ \begin{matrix} \frac{dx}{dt} = -y - z \\ \frac{dy}{dt} = x + ay \\ \frac{dz}{dt} = b + z(x-c) \end{matrix} \right.  ;$
+\end{center}
+
+Массив связных осцилляторов Рёсслера:
+\begin{center}
+$\dot{x_i} = -\omega_iy_i - z_i +k(2x_i - x_{i-1} - x_{i+i})$,\\
+$\dot{y_i} = \omega_ix_i - ay_i$,\\
+$\dot{z_i} = b + z_i(x_i - c)$,
+\end{center}
+
+
+\subsection{Выводы}
+
+\LaTeX{} наиболее популярный набор макрорасширений (или макропакет) системы компьютерной вёрстки \TeX{}, который облегчает набор сложных документов.
+
+Пакет позволяет автоматизировать многие задачи набора текста и подготовки статей, включая набор текста на нескольких языках, нумерацию разделов и формул, перекрёстные ссылки, размещение иллюстраций и таблиц на странице, ведение библиографии и др. Кроме базового набора существует множество пакетов расширения \LaTeX{}.
+
+Термин \LaTeX{} относится только к языку разметки, он не является текстовым редактором. Для того, чтобы создать документ с его помощью, надо набрать .tex-файл с помощью какого-нибудь текстового редактора. В принципе, подойдёт любой редактор, но большая часть людей предпочитает использовать специализированные, которые так или иначе облегчают работу по набору текста \LaTeX{}-разметки.
+
+Будучи распространяемым под лицензией LaTeX Project Public License, \LaTeX{} относится к свободному программному обеспечению.
+
+%------------------------------------------------------------------------------
+\newpage
+\section{Система контроля версий Git}
+
+\subsection{Цель работы}
+Изучить систему контроля версий Git, освоить основные приёмы работы с ней.
+
+\subsection{Ход работы}
+
+\begin{itemize}
+
+\item{Получить содержимое репозитория
+\begin{verbatim}git clone git@github.com:SemenMartynov/InfoSecCourse2015.git
+\end{verbatim}}
+
+\item{Добавить новую папку и первого файла под контроль версий
+\begin{verbatim}cd InfoSecCourse2015/
+mkdir tmp
+cd tmp
+echo 1 >> file
+git add --all
+\end{verbatim}}
+
+\item{Зафиксировать изменения в локальном репозитории
+\begin{verbatim}git commit -a -m "file added"
+\end{verbatim}}
+
+\item{Внести изменения в файл и просмотреть различия
+\begin{verbatim}echo 2 >> file
+git diff master:./file ./file
+\end{verbatim}}
+
+\item{Отменить локальные изменения
+\begin{verbatim}git reset HEAD ./file
+git checkout ./file
+\end{verbatim}}
+
+\item{Внести изменения в файл и просмотреть различия
+\begin{verbatim}echo 3 >> file
+git diff master:./file ./file
+\end{verbatim}}
+
+\item{Зафиксировать изменения в локальном репозитории, зафиксировать изменения в центральном репозитории
+\begin{verbatim}git commit -a -m "file changed"
+git push
+\end{verbatim}}
+
+\item{Получить изменения из центрального репозитория
+\begin{verbatim}git pull
+\end{verbatim}}
+
+\item{Поэкспериментировать с ветками
+\begin{verbatim}git branch -v
+git checkout -b temp
+git checkout master
+git merge temp
+git branch
+git branch -D temp
+git branch
+\end{verbatim}}
+
+\end{itemize}
+
+\subsection{Выводы}
+
+Git распределённая система управления версиями файлов. Git используется многими продуктами с открытым исходным кодом, такими как ядро Linux, Android, GNU Core Utilities, Mesa, Wine, Chromium и т.д. Программа является свободной и выпущена под лицензией GNU GPL версии 2.
+
+Преимущества и недостатки git по сравнению с централизованными системами управления версиями (такими как, например, Subversion) типичны для любой распределённой системы. Если же сравнивать git с «родственными» ей распределёнными системами, можно отметить, что git изначально идеологически ориентирован на работу с изменениями, а не с файлами, «единицей обработки» для него является набор изменений, или патч. Эта особенность прослеживается как в структуре самой системы (в частности — в структуре репозитория), так и в принципах построения команд; она отражается на производительности системы в различных вариантах её использования и на достоинствах и недостатках git по сравнению с другими DVCS.
+
+%------------------------------------------------------------------------------
+\newpage
+\section{Cоздание электронных цифровых подписей c PGP}
+
+\subsection{Цель работы}
+aaa
+
+\subsection{Ход работы}
+bbb
+
+\subsection{Выводы}
+
+ccс
 
 \end{document}
