@@ -1,13 +1,537 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\author{Имя Фамилия}
-\title{Отчет по лабораторной работе}
+\documentclass[a4paper, 12pt]{article}		% general format
+
+%%%% Charset
+\usepackage{cmap}							% make PDF files searchable and copyable
+\usepackage[utf8x]{inputenc}				% accept different input encodings
+\usepackage[T2A]{fontenc}					% russian font
+\usepackage[russian]{babel}					% multilingual support (T2A)
+
+%%%% Graphics
+\usepackage[dvipsnames]{xcolor}			% driver-independent color extensions
+\usepackage{graphicx}						% enhanced support for graphics
+\usepackage{wrapfig}						% produces figures which text can flow around
+
+%%%% Math
+\usepackage{amsmath}						% American Mathematical Society (AMS) math facilities
+\usepackage{amsfonts}						% fonts from the AMS
+\usepackage{amssymb}						% additional math symbols
+
+%%%% Typograpy (don't forget about cm-super)
+\usepackage{microtype}						% subliminal refinements towards typographical perfection
+\linespread{1.3}							% line spacing
+\usepackage[left=2.5cm, right=1.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\setlength{\parindent}{0pt}					% we don't want any paragraph indentation
+\usepackage{parskip}						% add distance between paragraphs
+
+%%%% Tables
+\usepackage{tabularx}						% Normal tables
+\usepackage{multirow}						% for tabular
+\usepackage{hhline}							% for tabular
+
+
+%%%% Other
+\usepackage{url}							% verbatim with URL-sensitive line breaks
+\usepackage{fancyvrb}						% verbatim with box
+\setcounter{secnumdepth}{5}					%
+%------------------------------------------------------------------------------
+\usepackage{listings}						% typeset source code listings
+
+% Цвета для кода
+\definecolor{string}{HTML}{101AF9}			% цвет строк в коде
+\definecolor{comment}{HTML}{3F7F5F}		% цвет комментариев в коде
+\definecolor{keyword}{HTML}{5F1441}		% цвет ключевых слов в коде
+\definecolor{morecomment}{HTML}{8000FF}	% цвет include и других элементов в коде
+\definecolor{captiontext}{HTML}{FFFFFF}	% цвет текста заголовка в коде
+\definecolor{captionbk}{HTML}{999999}		% цвет фона заголовка в коде
+\definecolor{bk}{HTML}{FFFFFF}				% цвет фона в коде
+\definecolor{frame}{HTML}{999999}			% цвет рамки в коде
+
+% Настройки отображения кода
+\lstset{
+	language=C++,							% Язык кода по умолчанию
+	morekeywords={*,...},					% если хотите добавить ключевые слова, то добавляйте
+	% Цвета
+	keywordstyle=\color{keyword}\ttfamily\bfseries,
+	stringstyle=\color{string}\ttfamily,
+	commentstyle=\color{comment}\ttfamily\itshape,
+	morecomment=[l][\color{morecomment}]{\#},
+	% Настройки отображения
+	breaklines=true,						% Перенос длинных строк
+	basicstyle=\ttfamily\footnotesize,		% Шрифт для отображения кода
+	backgroundcolor=\color{bk},				% Цвет фона кода
+	%frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep, % Рамка, подогнанная к заголовку
+	frame=tblr								% draw a frame at all sides of the code block
+	rulecolor=\color{frame},				% Цвет рамки
+	tabsize=2,								% tab space width
+	showstringspaces=false,					% don't mark spaces in strings
+	% Настройка отображения номеров строк. Если не нужно, то удалите весь блок
+	numbers=left,							% Слева отображаются номера строк
+	stepnumber=1,							% Каждую строку нумеровать
+	numbersep=5pt,							% Отступ от кода
+	numberstyle=\small\color{black},		% Стиль написания номеров строк
+	% Для отображения русского языка
+	extendedchars=true,
+	literate={Ö}{{\"O}}1
+	 	{Ä}{{\"A}}1
+	 	{Ü}{{\"U}}1
+		{ß}{{\ss}}1
+		{ü}{{\"u}}1
+		{ä}{{\"a}}1
+		{ö}{{\"o}}1
+		{~}{{\textasciitilde}}1
+		{а}{{\selectfont\char224}}1
+		{б}{{\selectfont\char225}}1
+		{в}{{\selectfont\char226}}1
+		{г}{{\selectfont\char227}}1
+		{д}{{\selectfont\char228}}1
+		{е}{{\selectfont\char229}}1
+		{ё}{{\"e}}1
+		{ж}{{\selectfont\char230}}1
+		{з}{{\selectfont\char231}}1
+		{и}{{\selectfont\char232}}1
+		{й}{{\selectfont\char233}}1
+		{к}{{\selectfont\char234}}1
+		{л}{{\selectfont\char235}}1
+		{м}{{\selectfont\char236}}1
+		{н}{{\selectfont\char237}}1
+		{о}{{\selectfont\char238}}1
+		{п}{{\selectfont\char239}}1
+		{р}{{\selectfont\char240}}1
+		{с}{{\selectfont\char241}}1
+		{т}{{\selectfont\char242}}1
+		{у}{{\selectfont\char243}}1
+		{ф}{{\selectfont\char244}}1
+		{х}{{\selectfont\char245}}1
+		{ц}{{\selectfont\char246}}1
+		{ч}{{\selectfont\char247}}1
+		{ш}{{\selectfont\char248}}1
+		{щ}{{\selectfont\char249}}1
+		{ъ}{{\selectfont\char250}}1
+		{ы}{{\selectfont\char251}}1
+		{ь}{{\selectfont\char252}}1
+		{э}{{\selectfont\char253}}1
+		{ю}{{\selectfont\char254}}1
+		{я}{{\selectfont\char255}}1
+		{А}{{\selectfont\char192}}1
+		{Б}{{\selectfont\char193}}1
+		{В}{{\selectfont\char194}}1
+		{Г}{{\selectfont\char195}}1
+		{Д}{{\selectfont\char196}}1
+		{Е}{{\selectfont\char197}}1
+		{Ё}{{\"E}}1
+		{Ж}{{\selectfont\char198}}1
+		{З}{{\selectfont\char199}}1
+		{И}{{\selectfont\char200}}1
+		{Й}{{\selectfont\char201}}1
+		{К}{{\selectfont\char202}}1
+		{Л}{{\selectfont\char203}}1
+		{М}{{\selectfont\char204}}1
+		{Н}{{\selectfont\char205}}1
+		{О}{{\selectfont\char206}}1
+		{П}{{\selectfont\char207}}1
+		{Р}{{\selectfont\char208}}1
+		{С}{{\selectfont\char209}}1
+		{Т}{{\selectfont\char210}}1
+		{У}{{\selectfont\char211}}1
+		{Ф}{{\selectfont\char212}}1
+		{Х}{{\selectfont\char213}}1
+		{Ц}{{\selectfont\char214}}1
+		{Ч}{{\selectfont\char215}}1
+		{Ш}{{\selectfont\char216}}1
+		{Щ}{{\selectfont\char217}}1
+		{Ъ}{{\selectfont\char218}}1
+		{Ы}{{\selectfont\char219}}1
+		{Ь}{{\selectfont\char220}}1
+		{Э}{{\selectfont\char221}}1
+		{Ю}{{\selectfont\char222}}1
+		{Я}{{\selectfont\char223}}1
+		{і}{{\selectfont\char105}}1
+		{ї}{{\selectfont\char168}}1
+		{є}{{\selectfont\char185}}1
+		{ґ}{{\selectfont\char160}}1
+		{І}{{\selectfont\char73}}1
+		{Ї}{{\selectfont\char136}}1
+		{Є}{{\selectfont\char153}}1
+		{Ґ}{{\selectfont\char128}}1
+}
+
+% Для настройки заголовка кода
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{сaptiontext}}
+\DeclareCaptionFormat{listing}{\parbox{\linewidth}{\colorbox{сaptionbk}{\parbox{\linewidth}{#1#2#3}}\vskip-4pt}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\renewcommand{\lstlistingname}{Листинг} % Переименование Listings в нужное именование структуры
+
+%------------------------------------------------------------------------------
+\author{Семён Мартынов\\<semen.martynov@gmail.com>}
+\title{Отчет по лабораторной работе 2:\\Nmap Metasploit}
 \begin{document}
 \maketitle
+\tableofcontents{}
+
+%------------------------------------------------------------------------------
+\newpage
+\section{Утилита для исследования сети и сканер портов Nmap}
+
+\subsection{Цель работы}
+
+Изучение работы программы Nmap на примере локальной домашней сети и сети из виртуальных машин с Kali Linux и Metasploitable2.
+
+\subsection{Ход работы}
+
+Эта часть работы выполняется в домашней сети 192.168.124.0/24, построенной на технологиях Fast Ethernet (IEEE 802.3u) и WiFi (IEEE 802.11n).
+
+\subsubsection{Опредление набора и версии сервисов запущенных на компьютере в диапазоне адресов}
+
+\paragraph{Провести поиск активных хостов} Для сканирования сети буедет использована команда:
+\begin{Verbatim}[frame=single]
+nmap -sn 192.168.124.3-255
+\end{Verbatim}
+
+Сочетание ключей s и n приводит к быстрому сканированию (т.е. буз сканирования портов). Иногда это называют "ping scan" (и в старых версиях для этого испольховалось "-sP"). Цель задана диапазоном IP адресов, из которого исключен роутер, и машины, с которой проводилось сканирование.
+
+Результат сканирования:
+\begin{Verbatim}[frame=single]
+$ nmap -sn 192.168.124.3-255
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2015-05-18 01:01 MSK
+Nmap scan report for 192.168.124.4
+Host is up (0.020s latency).
+Nmap scan report for 192.168.124.100
+Host is up (0.00030s latency).
+Nmap scan report for 192.168.124.195
+Host is up (0.034s latency).
+Nmap scan report for 192.168.124.239
+Host is up (0.042s latency).
+Nmap scan report for 192.168.124.249
+Host is up (0.038s latency).
+Nmap done: 253 IP addresses (5 hosts up) scanned in 2.43 seconds
+\end{Verbatim}
+
+\paragraph{Определить открытые порты}
+
+Опеределим состояние 10 наиболее популярных портах на хостах из того же диапазона (стоит отметить, что хостов стало меньше)
+
+\begin{Verbatim}[frame=single]
+$ nmap --top-ports 10 192.168.124.3-255
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2015-05-18 01:26 MSK
+Nmap scan report for 192.168.124.4
+Host is up (0.0057s latency).
+PORT     STATE  SERVICE
+21/tcp   closed ftp
+22/tcp   open   ssh
+23/tcp   closed telnet
+25/tcp   closed smtp
+80/tcp   closed http
+110/tcp  closed pop3
+139/tcp  closed netbios-ssn
+443/tcp  closed https
+445/tcp  closed microsoft-ds
+3389/tcp closed ms-wbt-server
+
+Nmap scan report for 192.168.124.100
+Host is up (0.00026s latency).
+PORT     STATE  SERVICE
+21/tcp   closed ftp
+22/tcp   open   ssh
+23/tcp   closed telnet
+25/tcp   closed smtp
+80/tcp   closed http
+110/tcp  closed pop3
+139/tcp  open   netbios-ssn
+443/tcp  closed https
+445/tcp  open   microsoft-ds
+3389/tcp closed ms-wbt-server
+
+Nmap scan report for 192.168.124.244
+Host is up (0.017s latency).
+PORT     STATE  SERVICE
+21/tcp   closed ftp
+22/tcp   closed ssh
+23/tcp   closed telnet
+25/tcp   closed smtp
+80/tcp   closed http
+110/tcp  closed pop3
+139/tcp  closed netbios-ssn
+443/tcp  closed https
+445/tcp  closed microsoft-ds
+3389/tcp closed ms-wbt-server
+
+Nmap scan report for 192.168.124.249
+Host is up (0.035s latency).
+PORT     STATE  SERVICE
+21/tcp   closed ftp
+22/tcp   closed ssh
+23/tcp   closed telnet
+25/tcp   closed smtp
+80/tcp   closed http
+110/tcp  closed pop3
+139/tcp  closed netbios-ssn
+443/tcp  closed https
+445/tcp  closed microsoft-ds
+3389/tcp closed ms-wbt-server
+
+Nmap done: 253 IP addresses (4 hosts up) scanned in 2.79 seconds
+\end{Verbatim}
+
+\paragraph{Определить версии сервисов} Дополнение команды ключем V приведеёт к опредедлению версий (где это возможно).
+
+\begin{Verbatim}[frame=single]
+$ nmap -sV 192.168.124.3-255
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2015-05-18 01:34 MSK
+Nmap scan report for 192.168.124.4
+Host is up (0.029s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 6.8 (protocol 2.0)
+
+Nmap scan report for 192.168.124.100
+Host is up (0.00018s latency).
+Not shown: 997 closed ports
+PORT    STATE SERVICE     VERSION
+22/tcp  open  ssh         (protocol 2.0)
+139/tcp open  netbios-ssn Samba smbd 3.X (workgroup: IDEAPAD)
+445/tcp open  netbios-ssn Samba smbd 3.X (workgroup: IDEAPAD)
+1 service unrecognized despite returning data. If you know the
+service/version, please submit the following fingerprint at
+http://www.insecure.org/cgi-bin/servicefp-submit.cgi :
+SF-Port22-TCP:V=6.40%I=7%D=5/18%Time=55591797%P=x86_64-pc-linux-gnu%r(NULL
+SF:,29,"SSH-2\.0-OpenSSH_6\.6\.1p1\x20Ubuntu-2ubuntu2\r\n");
+
+Nmap scan report for 192.168.124.244
+Host is up (0.0080s latency).
+All 1000 scanned ports on 192.168.124.244 are closed
+
+Nmap scan report for 192.168.124.249
+Host is up (0.0041s latency).
+Not shown: 999 closed ports
+PORT      STATE SERVICE    VERSION
+62078/tcp open  tcpwrapped
+
+Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 253 IP addresses (4 hosts up) scanned in 54.77 seconds
+\end{Verbatim}
+
+\paragraph{Изучить файлы nmap-services, nmap-os-db, nmap-service-probes}
+
+Служебный файл \textbf{nmap-services} представляет из себя базу данных портов и протоколов. Каждая запись имеет число, определяющее вероятность того, что порт может быть открыт.
+
+Большинство строк имеют комментарии, которые Nmap игорирует, но пользователь может использовать GREP для получения информации о том или ином номере порта. Этот файл был изначально построен на базе список IANA, в котором сервисам распределялись порты (\url{http://www.iana.org/assignments/port-numbers}), но IANA не отслеживает порты троянов, червей и т.п., что является важным для многих пользователей Nmap.
+
+Отрывок файла приведён ниже.
+
+\begin{Verbatim}[frame=single]
+qotd         17/tcp    0.002346  # Quote of the Day
+qotd         17/udp    0.009209  # Quote of the Day
+msp          18/udp    0.000610  # Message Send Protocol
+chargen      19/tcp    0.002559  # ttytst source Character Generator
+chargen      19/udp    0.015865  # ttytst source Character Generator
+ftp-data     20/tcp    0.001079  # File Transfer [Default Data]
+ftp-data     20/udp    0.001878  # File Transfer [Default Data]
+ftp          21/tcp    0.197667  # File Transfer [Control]
+ftp          21/udp    0.004844  # File Transfer [Control]
+ssh          22/tcp    0.182286  # Secure Shell Login
+ssh          22/udp    0.003905  # Secure Shell Login
+telnet       23/tcp    0.221265
+telnet       23/udp    0.006211
+priv-mail    24/tcp    0.001154  # any private mail system
+priv-mail    24/udp    0.000329  # any private mail system
+smtp         25/tcp    0.131314  # Simple Mail Transfer
+smtp         25/udp    0.001285  # Simple Mail Transfer
+\end{Verbatim}
+
+Файл \textbf{nmap-os-db} содержит сотни примеров того, как различные операционные системы видут себя в различных ситуациях, создаваемых Nmap. Этот файл разделен на блоки, известные как отпечатки пальцев (fingerprints) и с каждым отпечатком соотносится имя операционной системы и её общая классификация
+
+\begin{Verbatim}[frame=single]
+Fingerprint FreeBSD 7.0
+Class FreeBSD | FreeBSD | 7.X | general purpose
+SEQ(SP=100-10A%GCD=1-6%ISR=108-112%TI=I%II=I%SS=S%TS=21|22)
+OPS(O1=M5B4NW8NNT11%O2=M578NW8NNT11%O3=M280NW8NNT11%O4=M5B4NW8NNT11%O5=M218NW8NNT11%O6=M109NNT11)
+WIN(W1=FFFF%W2=FFFF%W3=FFFF%W4=FFFF%W5=FFFF%W6=FFFF)
+ECN(R=Y%DF=Y%T=3B-45%TG=40%W=FFFF%O=M5B4NW8%CC=N%Q=)
+T1(R=Y%DF=Y%T=3B-45%TG=40%S=O%A=S+%F=AS%RD=0%Q=)
+T2(R=N)
+T3(R=Y%DF=Y%T=3B-45%TG=40%W=FFFF%S=O%A=S+%F=AS%O=M109NW8NNT11%RD=0%Q=)
+T4(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+T5(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)
+T6(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+T7(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=Z%A=S%F=AR%O=%RD=0%Q=)
+U1(DF=N%T=3B-45%TG=40%IPL=38%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)
+IE(DFI=S%T=3B-45%TG=40%CD=S)
+
+Fingerprint Linux 2.6.17 - 2.6.24
+Class Linux | Linux | 2.6.X | general purpose
+SEQ(SP=A5-D5%GCD=1-6%ISR=A7-D7%TI=Z%II=I%TS=U)
+OPS(O1=M400C%O2=M400C%O3=M400C%O4=M400C%O5=M400C%O6=M400C)
+WIN(W1=8018%W2=8018%W3=8018%W4=8018%W5=8018%W6=8018)
+ECN(R=Y%DF=Y%T=3B-45%TG=40%W=8018%O=M400C%CC=N%Q=)
+T1(R=Y%DF=Y%T=3B-45%TG=40%S=O%A=S+%F=AS%RD=0%Q=)
+T2(R=N)
+T3(R=Y%DF=Y%T=3B-45%TG=40%W=8018%S=O%A=S+%F=AS%O=M400C%RD=0%Q=)
+T4(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+T5(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)
+T6(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+T7(R=Y%DF=Y%T=3B-45%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)
+U1(DF=N%T=3B-45%TG=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)
+IE(DFI=N%T=3B-45%TG=40%CD=S)
+\end{Verbatim}
+
+Файл \textbf{nmap-service-probes} содержит описания различных ситуация и ответного поведения сервиса. Это необходимо чтобы определить, какая программа прослушивает порт.
+
+\begin{Verbatim}[frame=single]
+##############################NEXT PROBE##############################
+# DNS Server status request: http://www.rfc-editor.org/rfc/rfc1035.txt
+Probe UDP DNSStatusRequest q|\0\0\x10\0\0\0\0\0\0\0\0\0|
+ports 53,135
+match domain m|^\0\0\x90\x04\0\0\0\0\0\0\0\0|
+# This one below came from 2 tested Windows XP boxes
+match msrpc m|^\x04\x06\0\0\x10\0\0\0\0\0\0\0|
+[...]
+##############################NEXT PROBE##############################
+Probe UDP Help q|help\r\n\r\n|
+ports 7,13,37
+match chargen m|@ABCDEFGHIJKLMNOPQRSTUVWXYZ|
+match echo m|^help\r\n\r\n$|
+match time m|^[\xc0-\xc5]...$|
+\end{Verbatim}
+
+\paragraph{Добавить новую сигнатуру службы в файл nmap-service-probes} (для этого создать минимальный tcp server, добиться, чтобы при сканировании nmap указывал для него название и версию)
+
+Исходный код простого TCP-сервера приведён в листинге 1.
+
+\lstinputlisting[language=C++, caption={Пример простого TCP-сервера}]{../../Programming/main.c}
+
+Простой запуск этого сервера можно обнаружить при помощи Nmap, но Nmap пока не знает, с чем имеет дело.
+
+\begin{Verbatim}[frame=single]
+$ nmap -sV -p 2404 192.168.124.4
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2015-05-18 03:42 MSK
+Nmap scan report for 192.168.124.4
+Host is up (0.0038s latency).
+PORT     STATE SERVICE VERSION
+2404/tcp open  echo
+
+Service detection performed.
+Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 41.28 seconds
+\end{Verbatim}
+
+Надо отметить, что основаня идея определена верно - это действительно эхо-севис. Но никаких данных о версии у нас нет. Теперь добавим описание сервиса в файл nmap-service-probes
+\begin{Verbatim}[frame=single]
+$ tail -n 7 /usr/share/nmap/nmap-service-probes
+##############################NEXT PROBE##############################
+# Simple TSP server.
+Probe TCP simple-tcp-server-ver q|version\r\n|
+rarity 9
+ports 2404
+
+match stcps m|^1\.0\.0$| p/Simple TCP Server/ v/1.0.0-3/
+\end{Verbatim}
+
+И снова проведём сканирование
+
+\begin{Verbatim}[frame=single]
+$ nmap -sV -p 2404 192.168.124.4
+Starting Nmap 6.40 ( http://nmap.org ) at 2015-05-18 03:44 MSK
+Nmap scan report for 192.168.124.4
+Host is up (0.0035s latency).
+PORT     STATE SERVICE VERSION
+2404/tcp open  stcps   Simple TCP Server 1.0.0-3
+
+Service detection performed. 
+Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 6.21 seconds
+\end{Verbatim}
+
+\paragraph{Сохранить вывод утилиты в формате xml}
+
+Вызов команды имеет следующий вид
+\begin{Verbatim}[frame=single]
+nmap -sV -p 2404 -oX - scanme.nmap.org 192.168.124.4
+\end{Verbatim}
+
+Результат представляет собой XML-файл
+\begin{Verbatim}[frame=single]
+<?xml version="1.0"?>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl"
+                                                            type="text/xsl"?>
+<!-- Nmap 6.40 scan initiated Mon May 18 03:47:51 2015
+                 as: nmap -sV -p 2404 -oX - scanme.nmap.org 192.168.124.4 -->
+<nmaprun scanner="nmap" args="nmap -sV -p 2404 -oX - scanme.nmap.org
+              192.168.124.4" start="1431910071" startstr="Mon May 18 03:47:51
+              2015" version="6.40" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="2404"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1431910071" endtime="1431910079"><status state="up"
+                                       reason="conn-refused" reason_ttl="0"/>
+<address addr="192.168.124.4" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="2404"><state state="open"
+              reason="syn-ack" reason_ttl="0"/><service name="stcps" product=
+              "Simple TCP Server" version="1.0.0-3" method="probed" conf="10"/>
+              </port>
+</ports>
+<times srtt="4122" rttvar="2991" to="100000"/>
+</host>
+<runstats><finished time="1431910079" timestr="Mon May 18 03:47:59 2015"
+               elapsed="7.40" summary="Nmap done at Mon May 18 03:47:59 2015;
+               2 IP addresses (1 host up) scanned in 7.40 seconds"
+               exit="success"/><hosts up="1" down="1" total="2"/>
+</runstats>
+</nmaprun>
+\end{Verbatim}
+
+\paragraph{Исследовать различные этапы и режимы работы nmap с использованием утилиты Wireshark}
+
+На рисунке 1 показано сканирование порта 2404 (по совпадению, он имеет имя iec-104). Видно, что в пакете передаётся запрос "version". А на рисунке 2 опрос 10 наиболее популярных портов.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{res/pic01}
+\caption{Определение сервиса на порт 2040}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{res/pic02}
+\caption{Опрос 10 наиболее популярных портов}
+\end{figure}
+
+\subsubsection{Просканировать виртуальную машину Metasploitable2 используя db\_nmap из состава metasploit\-framework}
+
+\subsubsection{Выбрать пять записей из файла nmap-service-probes и описать их работу Выбрать один скрипт из состава Nmap и описать его работу}
+
+\subsection{Выводы}
+
+
+%------------------------------------------------------------------------------
+\newpage
+\section{Инструмент тестов на проникновение Metasploit}
+
+\subsection{Цель работы}
+
+\subsection{Ход работы}
+
+\subsubsection{Описать последовательность действий для получения доступа к косоли}
+
+\paragraph{Подключиться к VNC-серверу, получить доступ к консоли}
+
+\paragraph{олучить список директорий в общем доступе по протоколу SMB}
+
+\paragraph{Получить консоль используя уязвимость в vsftpd}
+
+\paragraph{Получить консоль используя уязвимость в irc}
+
+\paragraph{Armitage Hail Mary}
+
+\subsubsection{Изучить три файла с исходным кодом эксплойтов или служебных скриптов на ruby и описать, что в них происходит}
+
+\subsection{Выводы}
+
 
 \end{document}
