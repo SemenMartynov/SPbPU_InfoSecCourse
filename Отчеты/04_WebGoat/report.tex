@@ -1,13 +1,118 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\author{Имя Фамилия}
-\title{Отчет по лабораторной работе}
+\documentclass[a4paper, 12pt]{article}		% general format
+
+%%%% Charset
+\usepackage{cmap}							% make PDF files searchable and copyable
+\usepackage[utf8x]{inputenc}				% accept different input encodings
+\usepackage[T2A]{fontenc}					% Russian font
+\usepackage[russian]{babel}					% multilingual support (T2A)
+
+%%%% Graphics
+\usepackage[dvipsnames]{xcolor}			% driver-independent color extensions
+\usepackage{graphicx}						% enhanced support for graphics
+\usepackage{wrapfig}						% produces figures which text can flow around
+
+%%%% Math
+\usepackage{amsmath}						% American Mathematical Society (AMS) math facilities
+\usepackage{amsfonts}						% fonts from the AMS
+\usepackage{amssymb}						% additional math symbols
+
+%%%% Typography (don't forget about cm-super)
+\usepackage{microtype}						% subliminal refinements towards typographical perfection
+\linespread{1.3}							% line spacing
+\usepackage[left=2.5cm, right=1.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\setlength{\parindent}{0pt}					% we don't want any paragraph indentation
+\usepackage{parskip}						% add distance between paragraphs
+
+%%%% Tables
+\usepackage{tabularx}						% Normal tables
+\usepackage{multirow}						% for tabular
+\usepackage{hhline}							% for tabular
+
+
+%%%% Other
+\usepackage{url}							% verbatim with URL-sensitive line breaks
+\usepackage{fancyvrb}						% verbatim with box
+\setcounter{secnumdepth}{5}					%
+
+%------------------------------------------------------------------------------
+\usepackage{listings}						% typeset source code listings
+
+% Настройки отображения кода
+\lstset{
+	% Настройки отображения
+	breaklines=true,						% Перенос длинных строк
+	basicstyle=\ttfamily\footnotesize,		% Шрифт для отображения кода
+	frame=tblr								% draw a frame at all sides of the code block
+	tabsize=2,								% tab space width
+	showstringspaces=false,					% don't mark spaces in strings
+	% Настройка отображения номеров строк. Если не нужно, то удалите весь блок
+	numbers=left,							% Слева отображаются номера строк
+	stepnumber=1,							% Каждую строку нумеровать
+	numbersep=5pt,							% Отступ от кода
+	numberstyle=\small\color{black},		% Стиль написания номеров строк
+}
+
+% Для настройки заголовка кода
+\usepackage{caption}
+\renewcommand{\lstlistingname}{Листинг} % Переименование Listings в нужное именование структуры
+%------------------------------------------------------------------------------
+\author{Семён Мартынов\\<semen.martynov@gmail.com>}
+\title{Отчет по лабораторной работе 4:\\SSL WebGoat}
 \begin{document}
 \maketitle
+\tableofcontents{}
+
+%------------------------------------------------------------------------------
+
+\input{ssl}
+
+%------------------------------------------------------------------------------
+
+\newpage
+\section{Проект OWASP WebGoat}
+
+\subsection{Цель работы}
+
+Изучить наиболее распространенные веб-уязвимости и познакомиться с OWASP WebGoat.
+
+\subsection{Ход работы}
+
+\subsubsection{Недостатки контроля доступа}
+
+\subsubsection{Безопасность AJAX}
+
+\subsubsection{Недостатки аутентификации}
+
+\subsubsection{Переполнение буфера}
+
+\subsubsection{Качество кода}
+
+\subsubsection{Многопоточность}
+
+\subsubsection{Межсайтовое выполнение сценариев}
+
+\subsubsection{Неправильная обработка ошибок}
+
+\subsubsection{Недостатки приводящие к осуществлению инъекций (SQL и прочее)}
+
+\subsubsection{Отказ в обслуживании}
+
+\subsubsection{Небезопасное сетевое взаимодействие}
+
+\subsubsection{Небезопасная конфигурация}
+
+\subsubsection{Небезопасное хранилище}
+
+\subsubsection{Исполнение злонамеренного кода}
+
+\subsubsection{Подделка параметров}
+
+\subsubsection{Недостатки управление сессией}
+
+\subsubsection{Безопасность веб-сервисов}
+
+\subsection{Выводы}
+
+%------------------------------------------------------------------------------
 
 \end{document}
